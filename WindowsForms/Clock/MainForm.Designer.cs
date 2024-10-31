@@ -49,6 +49,7 @@
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.foregroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fontDialog = new System.Windows.Forms.FontDialog();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,6 +58,7 @@
             this.labelTime.AutoSize = true;
             this.labelTime.ContextMenuStrip = this.contextMenuStrip;
             this.labelTime.Font = new System.Drawing.Font("AniMe Matrix - MB_EN", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTime.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.labelTime.Location = new System.Drawing.Point(12, 9);
             this.labelTime.Name = "labelTime";
             this.labelTime.Size = new System.Drawing.Size(117, 39);
@@ -118,7 +120,7 @@
             this.toolStripSeparator4,
             this.closeToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(210, 204);
+            this.contextMenuStrip.Size = new System.Drawing.Size(210, 182);
             // 
             // topmostToolStripMenuItem
             // 
@@ -168,6 +170,7 @@
             this.fontsToolStripMenuItem.Name = "fontsToolStripMenuItem";
             this.fontsToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.fontsToolStripMenuItem.Text = "Fonts";
+            this.fontsToolStripMenuItem.Click += new System.EventHandler(this.fontsToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
@@ -250,6 +253,7 @@
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem foregroundColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem backgroundColorToolStripMenuItem;
+        private System.Windows.Forms.FontDialog fontDialog;
     }
 }
 
