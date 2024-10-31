@@ -37,11 +37,13 @@
             // 
             // comboBoxFont
             // 
+            this.comboBoxFont.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFont.FormattingEnabled = true;
             this.comboBoxFont.Location = new System.Drawing.Point(12, 22);
             this.comboBoxFont.Name = "comboBoxFont";
             this.comboBoxFont.Size = new System.Drawing.Size(399, 21);
             this.comboBoxFont.TabIndex = 0;
+            this.comboBoxFont.SelectedValueChanged += new System.EventHandler(this.comboBoxFont_SelectedValueChanged);
             // 
             // labelExample
             // 
@@ -62,6 +64,7 @@
             this.buttonOK.TabIndex = 2;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // buttonCancel
             // 
@@ -72,6 +75,7 @@
             this.buttonCancel.TabIndex = 3;
             this.buttonCancel.Text = "CANCEL";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // ChooseFont
             // 
