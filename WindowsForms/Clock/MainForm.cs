@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
+using Microsoft.Win32;
 
 
 namespace Clock
@@ -19,7 +20,7 @@ namespace Clock
         ColorDialog backgroundColorDialog;
         ColorDialog foregroundColorDialog;
         ChooseFont chooseFontDialog;
-        string FontName { get; set; }
+        string FontFile { get; set; }
 
         public MainForm()
         {
@@ -29,9 +30,9 @@ namespace Clock
             this.TransparencyKey = Color.Empty;
             backgroundColorDialog = new ColorDialog();
             foregroundColorDialog = new ColorDialog();
-            LoadSettings();
 
             chooseFontDialog = new ChooseFont();
+            LoadSettings();
 
            // backgroundColorDialog.Color = Color.Black;
             //foregroundColorDialog.Color=Color.Yellow;
@@ -64,15 +65,25 @@ namespace Clock
             sr.Close();
             backgroundColorDialog.Color = Color.FromArgb(Convert.ToInt32(settings.ToArray()[0]));
             foregroundColorDialog.Color = Color.FromArgb(Convert.ToInt32(settings.ToArray()[1]));
+            FontFile = settings.ToArray()[2];
+            topmostToolStripMenuItem.Checked = bool.Parse(settings.ToArray()[3]);
+            showDateToolStripMenuItem.Checked = bool.Parse(settings.ToArray()[4]);
+            labelTime.Font= chooseFontDialog.SetFontFile(FontFile);
             labelTime.ForeColor = foregroundColorDialog.Color;
-            labelTime.BackColor = backgroundColorDialog.Color;  
+            labelTime.BackColor = backgroundColorDialog.Color;
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            object run=rk.GetValue("Clock318");
+            if (run != null) loadOnWindowsStartupToolStripMenuItem.Checked = true;
+            rk.Dispose();
         }
         void SaveSettings()
         {
             StreamWriter sw = new StreamWriter("settings.txt");
             sw.WriteLine(backgroundColorDialog.Color.ToArgb()); //ToArgb возвращает числовой код цвета
             sw.WriteLine(foregroundColorDialog.Color.ToArgb() );
-            sw.WriteLine(labelTime.Font.Name);
+            sw.WriteLine(chooseFontDialog.FontFile.Split('\\').Last());
+            sw.WriteLine(topmostToolStripMenuItem.Checked);
+            sw.WriteLine(showDateToolStripMenuItem.Checked);
             sw.Close();
             Process.Start("notepad", "settings.txt");
         }
@@ -175,6 +186,16 @@ namespace Clock
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveSettings();
+        }
+
+        private void loadOnWindowsStartupToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            RegistryKey rk =
+                Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",true);
+            if (loadOnWindowsStartupToolStripMenuItem.Checked)
+                rk.SetValue("clock318", Application.ExecutablePath);
+            else rk.DeleteValue("Clock318", false);//false- не бросать исключения если указанная запись отсутствует
+            rk.Dispose();
         }
     }
 }

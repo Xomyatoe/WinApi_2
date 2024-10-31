@@ -1,3 +1,5 @@
--16711936
--128
-AniMe Matrix - MB_EN
+-16777216
+-65536
+BurgerDoodleTwoNF.ttf
+True
+True
