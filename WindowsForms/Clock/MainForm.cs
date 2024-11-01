@@ -13,6 +13,7 @@ using System.Diagnostics;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
+
 namespace Clock
 {
     public partial class MainForm : Form
@@ -49,6 +50,7 @@ namespace Clock
             this.Text += $" Location: {this.Location.X} x{this.Location.Y}";
             alarm = new Alarm();
             GetNextAlarm();
+            
 
         }
         void SetFontDirectory()
@@ -133,10 +135,23 @@ namespace Clock
                 DateTime.Now.Minute==alarm.Time.Minute&&
                 DateTime.Now.Second==alarm.Time.Second)
             {
-                MessageBox.Show(alarm.Filename,"Alarm",MessageBoxButtons.OK, MessageBoxIcon.Information);
+               // MessageBox.Show(alarm.Filename,"Alarm",MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Console.WriteLine("ALARM:---" + alarm.ToString());
+                PlayAlarm();
+                GetNextAlarm();
             }
-            GetNextAlarm();
+            if(DateTime.Now.Second==0)
+            {
+                GetNextAlarm();
+                Console.WriteLine("Minute");
+            }
+        }
+        void PlayAlarm()
+        {
+            axWindowsMediaPlayer.URL = alarm.Filename;
+            axWindowsMediaPlayer.settings.volume = 100;
+            axWindowsMediaPlayer.Ctlcontrols.play();
+            axWindowsMediaPlayer.Visible = true;
         }
         private void SetVisibility(bool visible) 
         {
@@ -145,7 +160,9 @@ namespace Clock
             this.ShowInTaskbar = visible;
             cbShowDate.Visible = visible;
             btnHideControls.Visible = visible;
-            labelTime.BackColor = visible?Color.Empty:backgroundColorDialog.Color;   
+            labelTime.BackColor = visible?Color.Empty:backgroundColorDialog.Color;
+            axWindowsMediaPlayer.Visible = false;
+
         }
         private void btnHideControls_Click(object sender, EventArgs e)
         {
@@ -242,6 +259,7 @@ namespace Clock
         private void alarmsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             alarmList.ShowDialog(this);
+            GetNextAlarm();
         }
         [DllImport("kernel32.dll")]
         static extern bool AllocConsole();
