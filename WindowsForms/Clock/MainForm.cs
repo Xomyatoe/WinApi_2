@@ -94,16 +94,22 @@ namespace Clock
         }
         void GetNextAlarm()
         {
-           // if (alarmList.ListBoxAlarms != null)
-            //{
+                
                 List<Alarm> alarms = new List<Alarm>();
                 foreach (Alarm item in alarmList.ListBoxAlarms.Items)
                 {
+                   if(item.Time>DateTime.Now) 
                     alarms.Add(item);
                 }
-                if(alarms.Min()!=null)alarm = alarms.Min();
-                Console.WriteLine(alarm);
-            //}
+            if(alarms.Min()!=null)alarm = alarms.Min();
+            //List<TimeSpan> intervals=new List<TimeSpan>();
+            //foreach (Alarm item in alarmList.ListBoxAlarms.Items)
+            //{
+            //    TimeSpan min = new TimeSpan(24, 0, 0);
+            //    if (DateTime.Now - item.Time < min) alarm = item; 
+            //}            
+           Console.WriteLine(alarm);
+            
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -112,14 +118,25 @@ namespace Clock
             {
                 labelTime.Text += $"\n{DateTime.Today.ToString("yyyy.MM.dd")}";
             }
+            if(showWeekdayToolStripMenuItem.Checked)
+            {
+                labelTime.Text += $"\n{DateTime.Now.DayOfWeek}";
+            }
             //notifyIconSystemTray.Text = "Current time " + labelTime.Text;
-            GetNextAlarm();
-            if(DateTime.Now.Hour==alarm.Time.Hour&&
+            //Console.WriteLine(DateTime.Now.DayOfWeek - 1 < 0 & 6:DateTime.Now.Day - 1);
+           // int weekday = (int)DateTime.Now.DayOfWeek;
+           // weekday = weekday == 0 ? 7 : weekday - 1;
+
+            if (
+                alarm.Weekdays[((int)DateTime.Now.DayOfWeek==0?6:(int)DateTime.Now.DayOfWeek-1)] == true &&
+                DateTime.Now.Hour==alarm.Time.Hour&&
                 DateTime.Now.Minute==alarm.Time.Minute&&
                 DateTime.Now.Second==alarm.Time.Second)
             {
                 MessageBox.Show(alarm.Filename,"Alarm",MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Console.WriteLine("ALARM:---" + alarm.ToString());
             }
+            GetNextAlarm();
         }
         private void SetVisibility(bool visible) 
         {
