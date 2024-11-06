@@ -246,6 +246,7 @@
             this.axWindowsMediaPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
             this.axWindowsMediaPlayer.Size = new System.Drawing.Size(297, 47);
             this.axWindowsMediaPlayer.TabIndex = 3;
+            
             // 
             // MainForm
             // 
