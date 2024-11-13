@@ -61,6 +61,7 @@
             this.buttonDeleteAlarm.TabIndex = 2;
             this.buttonDeleteAlarm.Text = "Удалить";
             this.buttonDeleteAlarm.UseVisualStyleBackColor = true;
+            this.buttonDeleteAlarm.Click += new System.EventHandler(this.buttonDeleteAlarm_Click);
             // 
             // AlarmList
             // 
