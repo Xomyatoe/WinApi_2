@@ -263,6 +263,15 @@ namespace Clock
             alarmList.ShowDialog(this);
             GetNextAlarm();
         }
+        void SetPlayerInvisible(object sender, AxWMPLib._WMPOCXEvents_EndOfStreamEvent e)
+        {
+            axWindowsMediaPlayer.Visible = false;
+        }
+        void SetPlayerInvisible(object sender,AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e )
+        {
+            if(axWindowsMediaPlayer.playState==WMPLib.WMPPlayState.wmppsMediaEnded)
+            axWindowsMediaPlayer.Visible = false;
+        }
         [DllImport("kernel32.dll")]
         static extern bool AllocConsole();
     }
