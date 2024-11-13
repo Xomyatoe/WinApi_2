@@ -23,7 +23,6 @@ namespace Clock
         ChooseFont chooseFontDialog;
         AlarmList alarmList;
         Alarm alarm;
-        readonly string DEFAULT_ALARM_FILENAME = "..\\Sound\\\\gepard-murlyikaet-31139.mp3";
         string FontFile { get; set; }
 
         public MainForm()
@@ -101,7 +100,7 @@ namespace Clock
                 List<Alarm> alarms = new List<Alarm>();
                 foreach (Alarm item in alarmList.ListBoxAlarms.Items)
                 {
-                   if(item.Time>DateTime.Now) 
+                   if(item.Time.TimeOfDay>DateTime.Now.TimeOfDay) 
                     alarms.Add(item);
                 }
             if(alarms.Min()!=null)alarm = alarms.Min();
@@ -150,31 +149,10 @@ namespace Clock
         }
         void PlayAlarm()
         {
-            //try
-            //{
-            //string filename = File.Exists(alarm.Filename) ? alarm.Filename : DEFAULT_ALARM_FILENAME;
-            axWindowsMediaPlayer.URL = alarm.Filename; //) ? alarm.Filename : DEFAULT_ALARM_FILENAME;//"..\\Sound\\gepard-murlyikaet-31139.mp3";
-           // Console.WriteLine(File.Exists(alarm.Filename) ?"File Exists": "File not found");
-           //if(!File.Exists(alarm.Filename))
-           // {
-           //     Console.WriteLine("Error: File not found");
-           //     axWindowsMediaPlayer.URL= "..\\Sound\\gepard-murlyikaet-31139.mp3";
-           // }
-                axWindowsMediaPlayer.settings.volume = 100;
-                axWindowsMediaPlayer.Visible = true;
-                axWindowsMediaPlayer.Ctlcontrols.play();
-            Console.WriteLine($"PlayAlarm:\t{Directory.GetCurrentDirectory()}");
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    MessageBox.Show(ex.Message, "Alarm file not found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    axWindowsMediaPlayer.URL=alarm.Filename= "Sound\\gepard-murlyikaet-31139.mp3";
-            //    axWindowsMediaPlayer.settings.volume= 100;
-            //    axWindowsMediaPlayer.Visible = true;
-            //    axWindowsMediaPlayer.Ctlcontrols.play();
-            //    Console.WriteLine($"PlayAlarm:\t{Directory.GetCurrentDirectory()}");
-            //}
+            axWindowsMediaPlayer.URL = alarm.Filename;
+            axWindowsMediaPlayer.settings.volume = 100;
+            axWindowsMediaPlayer.Visible = true;
+            axWindowsMediaPlayer.Ctlcontrols.play();
         }
         private void SetVisibility(bool visible) 
         {
