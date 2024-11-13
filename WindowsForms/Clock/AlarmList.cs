@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Diagnostics;
 
 namespace Clock
 {
@@ -20,6 +22,7 @@ namespace Clock
         public AlarmList()
         {
             InitializeComponent();
+            LoadAlarmsFromFile("alarms.csv");
         }
 
         private void buttonAddAlarm_Click(object sender, EventArgs e)
@@ -41,6 +44,34 @@ namespace Clock
             }
 
             
+        }
+        public void SaveAlarmsToFile (string filename)
+        {
+            StreamWriter sw= new StreamWriter(filename);
+            foreach (Alarm alarm in listBoxAlarms.Items)
+            {
+                sw.WriteLine(alarm.ToFileString());
+            }
+            sw.Close();
+            Process.Start("notepad", filename);
+        }
+        public void LoadAlarmsFromFile(string filename) 
+        {
+            try
+            {
+                StreamReader sr = new StreamReader(filename);
+                while (!sr.EndOfStream)
+                {
+                    string alarm = sr.ReadLine();
+                    listBoxAlarms.Items.Add(new Alarm(alarm));
+                }
+                sr.Close();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message,"Alarm warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
