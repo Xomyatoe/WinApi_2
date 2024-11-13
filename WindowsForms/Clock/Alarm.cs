@@ -14,13 +14,14 @@ namespace Clock
         public DateTime Date { get; set; }
         public DateTime Time { get; set; }
         public bool[] Weekdays { get; private set; }
-        string filename;
-        public string Filename 
-        {
-            set=>filename=value; 
-            get=>File.Exists(filename)? filename: Path.GetFullPath(DEFAULT_ALARM_FILE); 
-        }
-        static readonly string DEFAULT_ALARM_FILE = "..\\Sound\\gepard-murlyikaet-31139.mp3";
+        //string filename;
+        //public string Filename 
+        //{
+        //    set=>filename=value; 
+        //    get=>File.Exists(filename)? filename: Path.GetFullPath(DEFAULT_ALARM_FILE); 
+        //}
+        //static readonly string DEFAULT_ALARM_FILE = "..\\Sound\\gepard-murlyikaet-31139.mp3";
+        public string Filename { get; set; } = "";
         public Alarm()
         { 
         Weekdays = new bool[7];

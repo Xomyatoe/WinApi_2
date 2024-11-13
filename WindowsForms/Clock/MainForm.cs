@@ -23,7 +23,8 @@ namespace Clock
         ChooseFont chooseFontDialog;
         AlarmList alarmList;
         Alarm alarm;
-        string FontFile { get; set; }
+        string FontFile { get; set; }  
+        //static readonly string DEFAULT_ALARM_SOUND= "..\\Sound\\gepard-murlyikaet-31139.mp3";
 
         public MainForm()
         {
@@ -149,10 +150,14 @@ namespace Clock
         }
         void PlayAlarm()
         {
-            axWindowsMediaPlayer.URL = alarm.Filename;
+            axWindowsMediaPlayer.URL = 
+                File.Exists(alarm.Filename) ?
+                alarm.Filename: 
+                Path.GetFullPath("..\\Sound\\gepard-murlyikaet-31139.mp3");
             axWindowsMediaPlayer.settings.volume = 100;
             axWindowsMediaPlayer.Visible = true;
             axWindowsMediaPlayer.Ctlcontrols.play();
+            Console.WriteLine($"Play ALARM: {alarm}");
         }
         private void SetVisibility(bool visible) 
         {
