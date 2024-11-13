@@ -24,7 +24,7 @@ namespace Clock
         AlarmList alarmList;
         Alarm alarm;
         string FontFile { get; set; }  
-        //static readonly string DEFAULT_ALARM_SOUND= "..\\Sound\\gepard-murlyikaet-31139.mp3";
+        static string DEFAULT_ALARM_SOUND= "..\\Sound\\gepard-murlyikaet-31139.mp3";
 
         public MainForm()
         {
@@ -153,7 +153,7 @@ namespace Clock
             axWindowsMediaPlayer.URL = 
                 File.Exists(alarm.Filename) ?
                 alarm.Filename: 
-                Path.GetFullPath("..\\Sound\\gepard-murlyikaet-31139.mp3");
+                Path.GetFullPath(DEFAULT_ALARM_SOUND);
             axWindowsMediaPlayer.settings.volume = 100;
             axWindowsMediaPlayer.Visible = true;
             axWindowsMediaPlayer.Ctlcontrols.play();
